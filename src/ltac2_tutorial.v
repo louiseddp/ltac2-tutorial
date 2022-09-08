@@ -50,6 +50,7 @@ Ltac2 Eval hello_world ().
 
 (* We can also print constrs (terms): *)
 Ltac2 Eval Message.print (Message.of_constr '(3+4)).
+Ltac2 Eval Message.print (Message.of_constr '(forall (A: Type), A)).
 
 (******************************************************************************)
 (*+ Reading the Ltac2 source *)
@@ -130,6 +131,8 @@ Fail Ltac2 Eval ill_typed ().
 
 (* we need to use $ to refer to the fact argument *)
 Ltac2 solve_with_correct := fun (fact:constr) => exact $fact.
+
+Print Ltac2 solve_with_correct.
 Goal True.
   (* to pass [I] as a constr, we use ', which is a shorthand for the open_constr
   antiquotation (we could have written [constr:(I)], but that's longer). *)
@@ -146,7 +149,7 @@ Qed.
 (* What if we wanted to refer to the global fact of type boole? This still
 doesn't work (it still solves the goal using the argument): *)
 Ltac solve_with_fact := fun fact => let x := constr:(fact) in exact x.
-Goal boole.
+Goal boole. 
   Fail ltac1:(solve_with_fact true).
 Abort.
 
