@@ -132,7 +132,7 @@ intros H.
 let h := hyps () in
 let h' := hyps_minus_term h @H in
 let () := hyps_printer h' in
-induction @H ;
+induction H ;
 Control.enter (fun () => (let h'' := hyps () in 
 hyps_copy (new_hypothesis h' h''))).
 
